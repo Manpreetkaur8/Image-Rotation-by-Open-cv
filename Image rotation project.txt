@@ -1,0 +1,26 @@
+#include <opencv2/opencv.hpp>
+#include <iostream>
+using namespace cv;
+using namespace std;
+int main() {
+    Mat image=imread("c:/opencvflower/flower.jpg", IMREAD_UNCHANGED);
+    if (image.empty()) {
+        cout << "Error in loading";
+    }
+    else {
+        double a;
+        cout << "Enter the angle: ";
+        cin >> a;
+        Mat dst;
+        Point2f pt(image.cols / 2., image.rows / 2.);
+        Mat r = getRotationMatrix2D(pt, a, 1.0);
+        warpAffine(image, dst, r, Size(image.cols, image.rows));
+        string windowName = "Cloud";
+        namedWindow(windowName, WINDOW_NORMAL);
+        imshow(windowName, image);
+        waitKey(0);
+        imshow(windowName, dst);
+        waitKey(0);
+        destroyWindow(windowName);
+    }
+}
